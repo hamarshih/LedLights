@@ -1,0 +1,63 @@
+/*Ahmad Nasser
+
+This project alrets the user by a led light when a motion is detected
+by the PIR sensor, and informs him about the distance of that motion 
+in CM from anywhere the user puts the Ultrasound sensor in.
+*/  
+  
+  
+  int led=12;
+    int sensor=2;
+    int state =LOW;
+    int val=0; //for the PIR sensor, 0 means no motion
+    const int trigPin = 5;
+    const int echoPin = 7;
+    long duration;
+    int distance;
+    
+    void setup() {
+    pinMode(led,OUTPUT);
+    pinMode(sensor,INPUT);
+    pinMode(trigPin, OUTPUT); 
+    pinMode(echoPin, INPUT); 
+    Serial.begin(9600);
+    }
+    
+    void loop() {
+      
+      val=digitalRead(sensor);
+      if(val==HIGH){
+          if(state==LOW){
+        
+        Serial.println("ALERT!!!!!!!!! MOTION DETECTED ");
+        state=HIGH;
+            }
+    
+    digitalWrite(led,HIGH);
+        delay(50);
+      
+        digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    // Sets the trigPin on HIGH state for 10 micro seconds
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+    // Reads the echoPin, returns the sound wave travel time in microseconds
+    duration = pulseIn(echoPin, HIGH);
+    // Calculating the distance
+    distance= duration*0.034/2;
+    // Prints the distance on the Serial Monitor
+    Serial.print("Distance of motion: ");
+    Serial.print(distance);
+    Serial.println(" CM"); 
+      }
+      else{
+        digitalWrite(led,LOW);
+        delay(50);
+        if(state==HIGH){
+          Serial.println("      Okay Motion already stopped!");
+          state=LOW;
+        }
+      }
+    
+    }
