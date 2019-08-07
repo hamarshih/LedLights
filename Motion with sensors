@@ -3,6 +3,11 @@
 This project alrets the user by a led light when a motion is detected
 by the PIR sensor, and informs him about the distance of that motion 
 in CM from anywhere the user puts the Ultrasound sensor in.
+.
+.
+Connecting: 
+  -Ultrasounds sensor: echo with pin7, trig with pin5 and vcc with V1n
+  -PIR sensor: out with pin2
 */  
   
   
